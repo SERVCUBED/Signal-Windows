@@ -219,12 +219,20 @@ namespace Signal_Windows.ViewModels
             {
                 Running = false;
                 App.MainPageActive = false;
+                //TODO turn on background service connection
+                Pipe?.Shutdown();
                 Debug.WriteLine("Shutdown lock grabbed");
                 CancelSource.Cancel();
                 await IncomingMessagesTask;
                 await OutgoingMessagesTask;
             }
             Debug.WriteLine("Shutdown lock released");
+        }
+
+        public void Resume()
+        {
+            //TODO turn off background service connection
+            Pipe?.Connect();
         }
 
         internal async void ContactsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
