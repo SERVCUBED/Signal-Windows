@@ -4,6 +4,7 @@ using Signal_Windows.Views;
 using System;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Graphics.Display;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -70,7 +71,13 @@ namespace Signal_Windows
             {
                 // TODO: When phone is in landscape mode this is incorrect and some stuff gets cut off, we need to
                 // get the actual useable width (actualwidth - top icon bar - bottom control bar)
-                ContactsGrid.Width = ActualWidth;
+                var co = DisplayInformation.GetForCurrentView().CurrentOrientation;
+                if (Utils.IsMobile &&
+                    (co == DisplayOrientations.Landscape || co == DisplayOrientations.LandscapeFlipped))
+                    ContactsGrid.Width = ActualWidth - (TopAppBar?.ActualWidth ?? 0) - (BottomAppBar?.ActualWidth ?? 0);
+                else
+                    ContactsGrid.Width = ActualWidth;
+
                 if (Vm.SelectedThread == null)
                 {
                     MainPanel.OpenPaneLength = ActualWidth;
