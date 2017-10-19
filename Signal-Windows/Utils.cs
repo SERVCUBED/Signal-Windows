@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Signal_Windows
 {
-    public static class Utils
+    public class Utils
     {
         public static string[] Colors = {
             "red",
@@ -86,14 +86,6 @@ namespace Signal_Windows
             }
         }
 
-        public static void AddRange<T>(this ObservableCollection<T> observableCollection, IEnumerable<T> collection)
-        {
-            foreach (var item in collection)
-            {
-                observableCollection.Add(item);
-            }
-        }
-
         public static int CalculateDefaultColorIndex(string title)
         {
             if (title.Length == 0)
@@ -143,15 +135,10 @@ namespace Signal_Windows
             }
         }
 
-        public static string GetCountryCode()
+        private string GetCountryCode()
         {
             var c = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
             return GetCountryCode(c.ToUpper());
-        }
-
-        public static bool ContainsCaseInsensitive(this string str, string value)
-        {
-            return CultureInfo.InvariantCulture.CompareInfo.IndexOf(str, value, CompareOptions.IgnoreCase) >= 0;
         }
 
         public static string GetCountryCode(string ISO3166) //https://stackoverflow.com/questions/34837436/uwp-get-country-phone-number-prefix

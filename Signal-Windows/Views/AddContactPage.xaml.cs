@@ -26,11 +26,12 @@ namespace Signal_Windows.Views
             }
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs ev)
+        protected override void OnNavigatedTo(NavigationEventArgs ev)
         {
             base.OnNavigatedTo(ev);
             Utils.EnableBackButton(Vm.BackButton_Click);
-            await Vm.OnNavigatedTo();
+            // probably not the best way to do this
+            Vm.ContactPhoto = null;
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
@@ -39,36 +40,15 @@ namespace Signal_Windows.Views
             Utils.DisableBackButton(Vm.BackButton_Click);
         }
 
-        private async void AddButton_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            await Vm.AddButton_Click(sender, e);
+            Vm.AddButton_Click(sender, e);
             Frame.Navigate(typeof(MainPage));
         }
 
-        private async void ContactsList_ItemClick(object sender, ItemClickEventArgs e)
+        private void PickButton_Click(object sender, RoutedEventArgs e)
         {
-            await Vm.ContactsList_ItemClick(sender, e);
-            Frame.Navigate(typeof(MainPage));
-        }
-
-        private void searchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-            Vm.searchBox_TextChanged(sender, args);
-        }
-
-        private void ContactNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Vm.ContactNameTextBox_TextChanged(sender, e);
-        }
-
-        private void ContactNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Vm.ContactNumberTextBox_TextChanged(sender, e);
-        }
-
-        private async void ContactsList_RefreshRequested(object sender, System.EventArgs e)
-        {
-            await Vm.RefreshContacts();
+            Vm.PickButton_Click(sender, e);
         }
     }
 }
